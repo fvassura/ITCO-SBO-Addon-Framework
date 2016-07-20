@@ -21,7 +21,7 @@ namespace ITCO.SboAddon.Framework.Dialogs.Inputs
             _required = required;
         }
 
-        public string Id => _id;
+        public string Id { get { return _id; } }
 
         public Item Item
         {
@@ -36,34 +36,34 @@ namespace ITCO.SboAddon.Framework.Dialogs.Inputs
             }
         }
 
-        public bool Required => _required;
+        public bool Required { get { return _required; } }
 
-        public string Title => _title;
+        public string Title { get { return _title; } }
 
-        public BoFormItemTypes ItemType => BoFormItemTypes.it_EDIT;
+        public BoFormItemTypes ItemType { get { return BoFormItemTypes.it_EDIT; } }
 
         public bool Validated
         {
             get
             {
-                if (string.IsNullOrEmpty(_editText.Value) && _required)                
-                    return false;                
+                if (string.IsNullOrEmpty(_editText.Value) && _required)
+                    return false;
 
                 return true;
             }
         }
 
-        public BoDataType DataType => BoDataType.dt_DATE;
+        public BoDataType DataType { get { return BoDataType.dt_DATE; } }
 
-        public int Length => 0;
+        public int Length { get { return 0; } }
 
-        public string DefaultValue => _defaultValue?.ToString("yyyyMMdd");
+        public string DefaultValue { get { return (_defaultValue.HasValue) ? _defaultValue.Value.ToString("yyyyMMdd") : null; } }
 
         public object GetValue()
         {
             if (_editText.Value.Length != 8)
                 return null;
-            
+
             return DateTime.ParseExact(_editText.Value, "yyyyMMdd", CultureInfo.InvariantCulture);
         }
     }

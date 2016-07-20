@@ -17,7 +17,7 @@ namespace ITCO.SboAddon.Framework.Helpers
             _recordSetObject.DoQuery(string.Format(sql, args));
         }
 
-        public int Count => _recordSetObject.RecordCount;
+        public int Count { get { return _recordSetObject.RecordCount; } }
 
         /// <summary>
         /// Note that Fields is COM object reference
@@ -62,9 +62,9 @@ namespace ITCO.SboAddon.Framework.Helpers
             _businessObject.Browser.Recordset = _recordSetObject;
         }
 
-        public int Count => _recordSetObject.RecordCount;
+        public int Count { get { return _recordSetObject.RecordCount; } }
 
-        public T BusinessObject => _businessObject;
+        public T BusinessObject { get { return _businessObject; } }
 
         /// <summary>
         /// Note that T is COM object reference
@@ -124,7 +124,7 @@ namespace ITCO.SboAddon.Framework.Helpers
         public SboSqlConnection(string query = null)
         {
             var dbPassword = ConfigurationManager.AppSettings["Sbo:DbPassword"];
-            var connectionString = $"Server={SboApp.Company.Server};Initial Catalog={SboApp.Company.CompanyDB};User ID={SboApp.Company.DbUserName};Password={dbPassword}";
+            var connectionString = string.Format("Server={0};Initial Catalog={1};User ID={2};Password={3}", SboApp.Company.Server, SboApp.Company.CompanyDB, SboApp.Company.DbUserName, dbPassword);
             _sqlConnection = new SqlConnection(connectionString);
 
             if (query == null) return;
@@ -134,8 +134,8 @@ namespace ITCO.SboAddon.Framework.Helpers
             _reader = command.ExecuteReader();
         }
 
-        public SqlConnection SqlConnection => _sqlConnection;
-        public bool HasRows => _reader.HasRows;
+        public SqlConnection SqlConnection { get { return _sqlConnection; } }
+        public bool HasRows { get { return _reader.HasRows; } }
 
         public IEnumerable<SqlDataReader> Result
         {

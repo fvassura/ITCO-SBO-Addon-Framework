@@ -40,26 +40,26 @@ namespace ITCO.SboAddon.Framework.Setup
         public static void RunSetup<TSetup>(TSetup setupInstance) where TSetup : ISetup
         {
             var setup = setupInstance.GetType();
-            var key = $"setup.lastversion.{setup.Name.Replace("Setup", string.Empty)}";
+            var key = string.Format("setup.lastversion.{0}", setup.Name.Replace("Setup", string.Empty));
             var lastVersionInstalled = SettingService.GetSettingByKey(key, 0);
 
             if (lastVersionInstalled < setupInstance.Version)
             {
                 try
                 {
-                    SboApp.Logger.Info($"Running setup for {setup.Name}, current version is {lastVersionInstalled}, new version is {setupInstance.Version})");
+                    SboApp.Logger.Info(string.Format("Running setup for {0}, current version is {1}, new version is {2})", setup.Name, lastVersionInstalled, setupInstance.Version));
 
                     setupInstance.Run();
                     SettingService.SaveSetting(key, setupInstance.Version);
                 }
                 catch (Exception ex)
                 {
-                    SboApp.Logger.Error($"Setup error in {setup.Name}: {ex.Message}", ex);
+                    SboApp.Logger.Error(string.Format("Setup error in {0}: {1}", setup.Name, ex.Message), ex);
                     throw;
                 }
             }
 
-            SboApp.Logger.Info($"Setup for {setup.Name} is up-to-date! (v.{setupInstance.Version})");
+            SboApp.Logger.Info(string.Format("Setup for {0} is up-to-date! (v.{1})", setup.Name, setupInstance.Version));
         }
     }
 }

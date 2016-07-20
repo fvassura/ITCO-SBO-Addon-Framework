@@ -18,7 +18,7 @@ namespace ITCO.SboAddon.Framework.Dialogs.Inputs
             _defaultValue = defaultValue;
         }
 
-        public string Id => _id;
+        public string Id { get { return _id; } }
 
         public Item Item
         {
@@ -31,19 +31,19 @@ namespace ITCO.SboAddon.Framework.Dialogs.Inputs
             }
         }
 
-        public bool Required => _required;
+        public bool Required { get { return _required; } }
 
-        public string Title => _title;
+        public string Title { get { return _title; } }
 
-        public BoFormItemTypes ItemType => BoFormItemTypes.it_CHECK_BOX;
+        public BoFormItemTypes ItemType { get { return BoFormItemTypes.it_CHECK_BOX; } }
 
-        public bool Validated => true;
+        public bool Validated { get { return true; } }
 
-        public BoDataType DataType => BoDataType.dt_SHORT_TEXT;
+        public BoDataType DataType { get { return BoDataType.dt_SHORT_TEXT; } }
 
-        public int Length => 1;
+        public int Length { get { return 1; } }
 
-        public string DefaultValue => null;
+        public string DefaultValue { get { return null; } }
 
         public object GetValue()
         {

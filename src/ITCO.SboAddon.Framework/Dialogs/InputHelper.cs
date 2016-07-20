@@ -1,5 +1,4 @@
-﻿using System;
-using ITCO.SboAddon.Framework.Dialogs.Inputs;
+﻿using ITCO.SboAddon.Framework.Dialogs.Inputs;
 using SAPbouiCOM;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +40,7 @@ namespace ITCO.SboAddon.Framework.Dialogs
         {
             return new InputHelper(title, dialogs);
         }
-        
+
         /// <summary>
         /// Add Dialog Input
         /// </summary>
@@ -60,13 +59,13 @@ namespace ITCO.SboAddon.Framework.Dialogs
         /// <exception cref="DialogCanceledException">Dialog in canceled</exception>
         public IDictionary<string, object> Result()
         {
-            _form.Height = 100 + (_dialogInputs.Count()*15);
+            _form.Height = 100 + (_dialogInputs.Count() * 15);
 
             foreach (var dialogInput in _dialogInputs)
             {
                 _yPos += 15;
                 // Caption
-                var titleText = _form.Items.Add($"T{dialogInput.Id}", BoFormItemTypes.it_STATIC).Specific as StaticText;
+                var titleText = _form.Items.Add(string.Format("T{0}", dialogInput.Id), BoFormItemTypes.it_STATIC).Specific as StaticText;
                 titleText.Item.Top = _yPos;
                 titleText.Item.Left = 10;
                 titleText.Item.Width = 150;
@@ -94,7 +93,7 @@ namespace ITCO.SboAddon.Framework.Dialogs
 
             _form.DefButton = "okButton";
             _form.Visible = true;
-            
+
             okButton.PressedAfter += (o, e) =>
             {
                 _formWait.Set();

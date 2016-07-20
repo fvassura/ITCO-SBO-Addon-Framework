@@ -1,8 +1,8 @@
-﻿using System;
+﻿using ITCO.SboAddon.Framework.Helpers;
+using SAPbobsCOM;
+using System;
 using System.Linq;
 using System.Threading;
-using ITCO.SboAddon.Framework.Helpers;
-using SAPbobsCOM;
 
 namespace ITCO.SboAddon.Framework.Extensions
 {
@@ -20,19 +20,19 @@ namespace ITCO.SboAddon.Framework.Extensions
             for (var i = 0; i < tryCount; i++)
             {
                 using (var query = new SboRecordsetQuery(
-                    $"SELECT hostname, loginame FROM sys.sysprocesses WHERE open_tran=1 AND dbid=DB_ID('{company.CompanyDB}')"))
+                    string.Format("SELECT hostname, loginame FROM sys.sysprocesses WHERE open_tran=1 AND dbid=DB_ID('{0}')", company.CompanyDB)))
                 {
                     if (query.Count == 0)
                         return;
 
                     var openTransaction = query.Result.First();
 
-                    SboApp.Logger.Trace($"Open Transaction by {openTransaction.Item("hostname").Value}, waiting {sleep} ms...");
+                    SboApp.Logger.Trace(string.Format("Open Transaction by {0}, waiting {1} ms...", openTransaction.Item("hostname").Value, sleep));
                 }
                 Thread.Sleep(sleep);
             }
 
-            throw new Exception($"Waiting for open transactions to long! ({sleep * tryCount} ms)");
+            throw new Exception(string.Format("Waiting for open transactions to long! ({0} ms)", sleep * tryCount));
         }
     }
 }

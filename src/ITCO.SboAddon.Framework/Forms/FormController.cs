@@ -19,12 +19,12 @@ namespace ITCO.SboAddon.Framework.Forms
         /// </summary>
         /// <example>Forms.MyForm.srf</example>
         /// <remarks>In VB Embeded Resources does not have Folder added in Name</remarks>
-        public virtual string FormResource => $"Forms.{GetType().Name.Replace("Controller", string.Empty)}.srf";
+        public virtual string FormResource { get { return string.Format("Forms.{0}.srf", GetType().Name.Replace("Controller", string.Empty)); } }
 
         /// <summary>
         /// Eg. NS_MyFormType1
         /// </summary>
-        public virtual string FormType => $"ITCO_{GetType().Name.Replace("Controller", string.Empty)}";
+        public virtual string FormType { get { return string.Format("ITCO_{0}", GetType().Name.Replace("Controller", string.Empty)); } }
 
         /// <summary>
         /// Open only once
@@ -55,7 +55,7 @@ namespace ITCO.SboAddon.Framework.Forms
                 {
                     var form = SboApp.Application.Forms.Item(FormType);
                     form.Select();
-                    //SboApp.Application.MessageBox($"Form {FormType} already open");
+                    //SboApp.Application.MessageBox(string.Format("Form {0} already open", FormType ));
                 }
                 catch
                 {
@@ -74,7 +74,7 @@ namespace ITCO.SboAddon.Framework.Forms
                 }
                 catch (Exception e)
                 {
-                    SboApp.Application.MessageBox($"FormCreated Error: {e.Message}");
+                    SboApp.Application.MessageBox(string.Format("FormCreated Error: {0}", e.Message));
                 }
 
                 try
@@ -83,15 +83,15 @@ namespace ITCO.SboAddon.Framework.Forms
                 }
                 catch (Exception e)
                 {
-                    SboApp.Application.MessageBox($"BindFormEvents Error: {e.Message}");
+                    SboApp.Application.MessageBox(string.Format("BindFormEvents Error: {0}", e.Message));
                 }
 
                 Form.Visible = true;
             }
             catch (Exception e)
             {
-                SboApp.Application.MessageBox($"Failed to open form {FormType}: {e.Message}");
-            }      
+                SboApp.Application.MessageBox(string.Format("Failed to open form {0}: {1}", FormType, e.Message));
+            }
         }
 
         /// <summary>
@@ -121,12 +121,12 @@ namespace ITCO.SboAddon.Framework.Forms
         /// <summary>
         /// Menu Id
         /// </summary>
-        public string MenuItemId => $"{FormType}_M";
+        public string MenuItemId { get { return string.Format("{0}_M", FormType); } }
 
         /// <summary>
         /// Menu position, -1 = Last
         /// </summary>
-        public int MenuItemPosition => -1;
+        public int MenuItemPosition { get { return -1; } }
         #endregion
     }
 }

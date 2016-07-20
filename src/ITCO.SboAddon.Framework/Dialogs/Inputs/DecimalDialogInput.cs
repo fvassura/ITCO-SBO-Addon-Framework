@@ -1,5 +1,5 @@
-﻿using System;
-using SAPbouiCOM;
+﻿using SAPbouiCOM;
+using System;
 using System.Globalization;
 
 namespace ITCO.SboAddon.Framework.Dialogs.Inputs
@@ -21,11 +21,11 @@ namespace ITCO.SboAddon.Framework.Dialogs.Inputs
             _required = required;
         }
 
-        public string Id => _id;
+        public string Id { get { return _id; } }
 
-        public bool Required => _required;
+        public bool Required { get { return _required; } }
 
-        public string Title => _title;
+        public string Title { get { return _title; } }
 
         public Item Item
         {
@@ -40,7 +40,7 @@ namespace ITCO.SboAddon.Framework.Dialogs.Inputs
             }
         }
 
-        public BoFormItemTypes ItemType => BoFormItemTypes.it_EDIT;
+        public BoFormItemTypes ItemType { get { return BoFormItemTypes.it_EDIT; } }
 
         public bool Validated
         {
@@ -57,11 +57,11 @@ namespace ITCO.SboAddon.Framework.Dialogs.Inputs
             }
         }
 
-        public BoDataType DataType => BoDataType.dt_QUANTITY;
+        public BoDataType DataType { get { return BoDataType.dt_QUANTITY; } }
 
-        public int Length => 0;
+        public int Length { get { return 0; } }
 
-        public string DefaultValue => _defaultValue == null ? null : Convert.ToString(_defaultValue, CultureInfo.InvariantCulture);
+        public string DefaultValue { get { return _defaultValue == null ? null : Convert.ToString(_defaultValue, CultureInfo.InvariantCulture); } }
 
         public object GetValue()
         {

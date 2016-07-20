@@ -1,7 +1,7 @@
-﻿using System;
-using System.Xml;
-using SAPbobsCOM;
+﻿using SAPbobsCOM;
 using SAPbouiCOM;
+using System;
+using System.Xml;
 
 namespace ITCO.SboAddon.Framework.Extensions
 {
@@ -46,7 +46,7 @@ namespace ITCO.SboAddon.Framework.Extensions
             _businessObject = (T)company.GetBusinessObject(boObjectTypes);
         }
 
-        public T Object => _businessObject;
+        public T Object { get { return _businessObject; } }
 
         public void Dispose()
         {

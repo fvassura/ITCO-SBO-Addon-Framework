@@ -1,7 +1,6 @@
 ﻿using ITCO.SboAddon.Framework.Helpers;
 using System;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace ITCO.SboAddon.Framework.Dialogs
@@ -82,7 +81,7 @@ namespace ITCO.SboAddon.Framework.Dialogs
         #endregion
 
     }
-    
+
     /// <summary>
     /// Dialog is canceled
     /// </summary>
@@ -92,16 +91,16 @@ namespace ITCO.SboAddon.Framework.Dialogs
         /// Dialog is Canceled
         /// </summary>
         public DialogCanceledException()
-            :base("Dialog canceled")
+            : base("Dialog canceled")
         { }
     }
-    
+
     internal class ForegroundWindowWrapper : IWin32Window
     {
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
 
-        public virtual IntPtr Handle { get; }
+        public virtual IntPtr Handle { get; set; }
 
         public ForegroundWindowWrapper(IntPtr handle)
         {

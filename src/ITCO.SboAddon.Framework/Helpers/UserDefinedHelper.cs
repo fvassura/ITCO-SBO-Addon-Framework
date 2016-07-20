@@ -12,11 +12,17 @@ namespace ITCO.SboAddon.Framework.Helpers
         /// <summary>
         /// 
         /// </summary>
-        public static Dictionary<string, string> YesNoValiesValues => new Dictionary<string, string>
+        public static Dictionary<string, string> YesNoValiesValues
+        {
+            get
+            {
+                return new Dictionary<string, string>
         {
             { "Y", "Yes"},
             { "N", "No" }
         };
+            }
+        }
 
         /// <summary>
         /// User defined table object
@@ -33,7 +39,7 @@ namespace ITCO.SboAddon.Framework.Helpers
             public UserDefinedTable CreateUDF(string fieldName, string fieldDescription,
             BoFieldTypes type = BoFieldTypes.db_Alpha, int size = 50, BoFldSubTypes subType = BoFldSubTypes.st_None)
             {
-                CreateField(TableName, fieldName, fieldDescription, type, size, subType);            
+                CreateField(TableName, fieldName, fieldDescription, type, size, subType);
                 return this;
             }
         }
@@ -48,7 +54,7 @@ namespace ITCO.SboAddon.Framework.Helpers
         public static UserDefinedTable CreateTable(string tableName, string tableDescription, BoUTBTableType tableType = BoUTBTableType.bott_NoObject)
         {
             UserTablesMD userTablesMd = null;
-            
+
             try
             {
                 userTablesMd = SboApp.Company.GetBusinessObject(BoObjectTypes.oUserTables) as UserTablesMD;
@@ -64,13 +70,13 @@ namespace ITCO.SboAddon.Framework.Helpers
 
                     ErrorHelper.HandleErrorWithException(
                         userTablesMd.Add(),
-                        $"Could not create UDT {tableName}");
+                        string.Format("Could not create UDT {0}", tableName));
                 }
             }
             catch (Exception ex)
             {
-                SboApp.Logger.Error($"UDT Create Error: {ex.Message}", ex);
-                throw;                
+                SboApp.Logger.Error(string.Format("UDT Create Error: {0}", ex.Message), ex);
+                throw;
             }
             finally
             {
@@ -91,7 +97,7 @@ namespace ITCO.SboAddon.Framework.Helpers
         /// <param name="size"></param>
         /// <param name="subType"></param>
         /// <returns></returns>
-        public static void CreateFieldOnUDT(string tableName, string fieldName, string fieldDescription, 
+        public static void CreateFieldOnUDT(string tableName, string fieldName, string fieldDescription,
             BoFieldTypes type = BoFieldTypes.db_Alpha, int size = 50, BoFldSubTypes subType = BoFldSubTypes.st_None)
         {
             tableName = "@" + tableName;
@@ -110,8 +116,8 @@ namespace ITCO.SboAddon.Framework.Helpers
         /// <param name="validValues">Dropdown values</param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public static void CreateField(string tableName, string fieldName, string fieldDescription, 
-            BoFieldTypes type = BoFieldTypes.db_Alpha, int size = 50, BoFldSubTypes subType = BoFldSubTypes.st_None, 
+        public static void CreateField(string tableName, string fieldName, string fieldDescription,
+            BoFieldTypes type = BoFieldTypes.db_Alpha, int size = 50, BoFldSubTypes subType = BoFldSubTypes.st_None,
             IDictionary<string, string> validValues = null, string defaultValue = null)
         {
             UserFieldsMD userFieldsMd = null;
@@ -149,7 +155,7 @@ namespace ITCO.SboAddon.Framework.Helpers
             }
             catch (Exception ex)
             {
-                SboApp.Logger.Error($"Create Field {tableName}.{fieldName} Error: {ex.Message}", ex);
+                SboApp.Logger.Error(string.Format("Create Field {0}.{1} Error: {2}", tableName, fieldName, ex.Message), ex);
                 throw;
             }
             finally
@@ -174,7 +180,7 @@ namespace ITCO.SboAddon.Framework.Helpers
 
             try
             {
-                recordSet.DoQuery($"SELECT FieldID FROM CUFD WHERE TableID='{tableName}' AND AliasID='{fieldAlias}'");
+                recordSet.DoQuery(string.Format("SELECT FieldID FROM CUFD WHERE TableID='{0}' AND AliasID='{1}'", tableName, fieldAlias));
 
                 if (recordSet.RecordCount == 1)
                 {

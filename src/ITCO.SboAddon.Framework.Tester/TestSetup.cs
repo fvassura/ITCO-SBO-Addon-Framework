@@ -8,7 +8,7 @@ namespace ITCO.SboAddon.Framework.Tester
 {
     public class TestSetup : ISetup
     {
-        public int Version => 3;
+        public int Version { get { return 3; } }
 
         public void Run()
         {
@@ -18,12 +18,12 @@ namespace ITCO.SboAddon.Framework.Tester
                 .CreateUDF("ITCO_MyField2", "My Field 2", BoFieldTypes.db_Numeric, 10);
 
             UserDefinedHelper.CreateField(
-                SboTable.BusinessPartner, "ITCO_YesNo", "Yes or no?", 
+                SboTable.BusinessPartner, "ITCO_YesNo", "Yes or no?",
                 BoFieldTypes.db_Alpha, 1, validValues: UserDefinedHelper.YesNoValiesValues);
 
             UserDefinedHelper.CreateField(
                 SboTable.Invoice, "ITCO_Exported", "Exported Date", BoFieldTypes.db_Date, 10);
-            
+
             // Init Setting
             SettingService.InitSetting("itco.savepath", "Save path", @"c:\temp\");
         }

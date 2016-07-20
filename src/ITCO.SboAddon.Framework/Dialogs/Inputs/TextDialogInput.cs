@@ -1,5 +1,4 @@
-﻿using System;
-using SAPbouiCOM;
+﻿using SAPbouiCOM;
 
 namespace ITCO.SboAddon.Framework.Dialogs.Inputs
 {
@@ -22,11 +21,11 @@ namespace ITCO.SboAddon.Framework.Dialogs.Inputs
             _length = length;
         }
 
-        public string Id => _id;
+        public string Id { get { return _id; } }
 
-        public bool Required => _required;
+        public bool Required { get { return _required; } }
 
-        public string Title => _title;
+        public string Title { get { return _title; } }
 
         public Item Item
         {
@@ -39,24 +38,24 @@ namespace ITCO.SboAddon.Framework.Dialogs.Inputs
             }
         }
 
-        public BoFormItemTypes ItemType => BoFormItemTypes.it_EDIT;
+        public BoFormItemTypes ItemType { get { return BoFormItemTypes.it_EDIT; } }
 
         public bool Validated
         {
             get
             {
-                if (string.IsNullOrEmpty(_editText.Value) && _required)                
-                    return false;                
+                if (string.IsNullOrEmpty(_editText.Value) && _required)
+                    return false;
 
                 return true;
             }
         }
 
-        public BoDataType DataType => BoDataType.dt_LONG_TEXT;
+        public BoDataType DataType { get { return BoDataType.dt_LONG_TEXT; } }
 
-        public int Length => _length;
+        public int Length { get { return _length; } }
 
-        public string DefaultValue => _defaultValue;
+        public string DefaultValue { get { return _defaultValue; } }
 
         public object GetValue()
         {

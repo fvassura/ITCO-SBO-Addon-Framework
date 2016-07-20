@@ -1,7 +1,7 @@
-﻿using ITCO.SboAddon.Framework.Helpers;
+﻿using Common.Logging;
+using ITCO.SboAddon.Framework.Helpers;
 using System;
 using System.Configuration;
-using Common.Logging;
 
 namespace ITCO.SboAddon.Framework
 {
@@ -22,7 +22,7 @@ namespace ITCO.SboAddon.Framework
         /// <summary>
         /// Common Logger
         /// </summary>
-        internal static ILog Logger => LogManager.GetLogger<SboApp>();
+        internal static ILog Logger { get { return LogManager.GetLogger<SboApp>(); } }
 
         /// <summary>
         /// Set existing DI and/or UI Api Connection
@@ -46,8 +46,8 @@ namespace ITCO.SboAddon.Framework
         {
             if (connectionString == null)
             {
-                connectionString = Environment.GetCommandLineArgs().Length > 1 ? 
-                    Convert.ToString(Environment.GetCommandLineArgs().GetValue(1)) : 
+                connectionString = Environment.GetCommandLineArgs().Length > 1 ?
+                    Convert.ToString(Environment.GetCommandLineArgs().GetValue(1)) :
                     "";
             }
 
@@ -72,13 +72,13 @@ namespace ITCO.SboAddon.Framework
                     SboAppLogger.Enable();
 
                 var assemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
-                Logger.Info($"{assemblyName} connected");
+                Logger.Info(string.Format("{0} connected", assemblyName));
 
                 SetAppEvents();
             }
             catch (Exception ex)
             {
-                Logger.Error($"SboApp UI Connect Error: {ex.Message}", ex);
+                Logger.Error(string.Format("SboApp UI Connect Error: {0}", ex.Message), ex);
                 throw;
             }
         }
@@ -103,7 +103,7 @@ namespace ITCO.SboAddon.Framework
                 DbServerType = serverType,
                 CompanyDB = companyDb
             };
-            
+
             if (licenceServer != null)
                 _diCompany.LicenseServer = licenceServer;
 
@@ -128,12 +128,12 @@ namespace ITCO.SboAddon.Framework
                 string errMsg;
                 _diCompany.GetLastError(out errCode, out errMsg);
 
-                Logger.Debug($"Servername={serverName}, CompanyDb={companyDb}, ServerType={serverType}, " +
-                             $"DbUsername={dbUsername}, DbPassword={dbPassword}, " +
-                             $"SboUsername={username}, SboPassword={password}, " +
-                             $"LicenceServer={licenceServer}");
+                Logger.Debug(string.Format("Servername={0}, CompanyDb={1}, ServerType={2}, ", serverName, companyDb, serverType) +
+                             string.Format("DbUsername={0}, DbPassword={1}, ", dbUsername, dbPassword) +
+                             string.Format("SboUsername={0}, SboPassword={1}, ", username, password) +
+                             string.Format("LicenceServer={0}", licenceServer));
 
-                throw new Exception($"DI Connect Error: {errCode} {errMsg}");
+                throw new Exception(string.Format("DI Connect Error: {0} {1}", errCode, errMsg));
             }
         }
         /// <summary>
@@ -197,12 +197,12 @@ namespace ITCO.SboAddon.Framework
         /// <summary>
         /// Check if SBO UI API is Connected
         /// </summary>
-        public static bool ApplicationConnected => _application != null && DiConnected;
+        public static bool ApplicationConnected { get { return _application != null && DiConnected; } }
 
         /// <summary>
         /// Check if SBO DI API is Connected
         /// </summary>
-        public static bool DiConnected => _diCompany != null && _diCompany.Connected;
+        public static bool DiConnected { get { return _diCompany != null && _diCompany.Connected; } }
 
         /// <summary>
         /// Set Default App Events

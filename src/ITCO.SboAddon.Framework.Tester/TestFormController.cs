@@ -1,5 +1,4 @@
-﻿using System;
-using ITCO.SboAddon.Framework.Constants;
+﻿using ITCO.SboAddon.Framework.Constants;
 using ITCO.SboAddon.Framework.Extensions;
 using ITCO.SboAddon.Framework.Forms;
 using ITCO.SboAddon.Framework.Setup;
@@ -20,15 +19,15 @@ namespace ITCO.SboAddon.Framework.Tester
 
             using (Form.FreezeEx())
             {
-                
+
             }
             SetupManager.RunSetup(new TestSetup());
         }
 
         #region IFormMenuItem
-        public string MenuItemTitle => "My Test Form";
+        public string MenuItemTitle { get { return "My Test Form"; } }
 
-        public string ParentMenuItemId => SboMenuItem.Inventory;
+        public string ParentMenuItemId { get { return SboMenuItem.Inventory; } }
 
         #endregion
     }

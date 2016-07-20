@@ -1,16 +1,13 @@
 ﻿using ITCO.SboAddon.Framework.Constants;
 using ITCO.SboAddon.Framework.Dialogs;
 using ITCO.SboAddon.Framework.Dialogs.Inputs;
+using ITCO.SboAddon.Framework.Extensions;
 using ITCO.SboAddon.Framework.Helpers;
 using ITCO.SboAddon.Framework.Services;
+using SAPbobsCOM;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Threading;
 using System.Windows.Forms;
-using ITCO.SboAddon.Framework.Extensions;
-using SAPbobsCOM;
-using SAPbouiCOM;
 using Application = System.Windows.Forms.Application;
 
 namespace ITCO.SboAddon.Framework.Tester
@@ -38,7 +35,7 @@ namespace ITCO.SboAddon.Framework.Tester
             }
             catch (Exception e)
             {
-                MessageBox.Show($"Error: {e.Message}\nExiting...");
+                MessageBox.Show(string.Format("Error: {0}\nExiting...", e.Message));
                 Application.Exit();
             }
         }
@@ -129,18 +126,18 @@ namespace ITCO.SboAddon.Framework.Tester
             }
             catch (DialogCanceledException de)
             {
-                
+
             }
             catch (Exception e)
             {
 
-                
+
             }
         }
     }
 
     public class MyDialog
     {
-        
+
     }
 }

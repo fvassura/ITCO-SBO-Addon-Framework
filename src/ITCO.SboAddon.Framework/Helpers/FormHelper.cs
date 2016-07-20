@@ -24,7 +24,7 @@ namespace ITCO.SboAddon.Framework.Helpers
                 // Try get existing form
                 try
                 {
-                    var form = SboApp.Application.Forms.Item(formId);                    
+                    var form = SboApp.Application.Forms.Item(formId);
                     return form;
                 }
                 catch
@@ -42,7 +42,7 @@ namespace ITCO.SboAddon.Framework.Helpers
                 if (stream == null)
                 {
                     var embededResources = string.Join(", ", assembly.GetManifestResourceNames());
-                    throw new Exception($"Failed to load embeded resource '{resourceName}' from Assembly '{assembly.GetName().Name}'. Available Resources: {embededResources}");
+                    throw new Exception(string.Format("Failed to load embeded resource '{0}' from Assembly '{1}'. Available Resources: {2}", resourceName, assembly.GetName().Name, embededResources));
                 }
 
                 using (var textStreamReader = new System.IO.StreamReader(stream))
@@ -62,7 +62,7 @@ namespace ITCO.SboAddon.Framework.Helpers
             }
             catch (Exception e)
             {
-                throw new Exception($"Failed to create form from resource {resourceName}: {e.Message}");
+                throw new Exception(string.Format("Failed to create form from resource {0}: {1}", resourceName, e.Message));
             }
         }
     }

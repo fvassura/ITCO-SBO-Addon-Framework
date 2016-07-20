@@ -1,8 +1,8 @@
 ﻿
-using System.Linq;
-using System.Text.RegularExpressions;
 using ITCO.SboAddon.Framework.Helpers;
 using SAPbobsCOM;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace ITCO.SboAddon.Framework.Extensions
 {
@@ -21,7 +21,7 @@ namespace ITCO.SboAddon.Framework.Extensions
             var userQuery = userQueryDefaultQuery;
 
             using (var userQueryObject = new SboRecordsetQuery<UserQueries>(
-                $"SELECT [IntrnalKey] FROM [OUQR] WHERE [QName] = '{userQueryName}'", BoObjectTypes.oUserQueries))
+                string.Format("SELECT [IntrnalKey] FROM [OUQR] WHERE [QName] = '{0}'", userQueryName), BoObjectTypes.oUserQueries))
             {
                 if (userQueryObject.Count == 0)
                 {
@@ -30,7 +30,7 @@ namespace ITCO.SboAddon.Framework.Extensions
                     userQueryObject.BusinessObject.QueryCategory = -1;
                     var response = userQueryObject.BusinessObject.Add();
 
-                    ErrorHelper.HandleErrorWithException(response, $"Could not create User Query '{userQueryName}'");
+                    ErrorHelper.HandleErrorWithException(response, string.Format("Could not create User Query '{0}'", userQueryName));
                 }
                 else
                 {

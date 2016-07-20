@@ -22,19 +22,19 @@ namespace ITCO.SboAddon.Framework.Dialogs.Inputs
             _withEmpty = withEmpty;
         }
 
-        public string Id => _id;
+        public string Id { get { return _id; } }
 
         public Item Item
         {
             set
             {
                 _item = value;
-                _comboBox  = _item.Specific as ComboBox;
+                _comboBox = _item.Specific as ComboBox;
                 if (_withEmpty)
-                foreach (var option in _options)
-                {
-                    _comboBox.ValidValues.Add(option.Key, option.Value);
-                }
+                    foreach (var option in _options)
+                    {
+                        _comboBox.ValidValues.Add(option.Key, option.Value);
+                    }
 
                 _comboBox.ExpandType = BoExpandType.et_ValueDescription;
                 _comboBox.DataBind.SetBound(true, "", _id);
@@ -43,19 +43,19 @@ namespace ITCO.SboAddon.Framework.Dialogs.Inputs
             }
         }
 
-        public bool Required => false;
+        public bool Required { get { return false; } }
 
-        public string Title => _title;
+        public string Title { get { return _title; } }
 
-        public BoFormItemTypes ItemType => BoFormItemTypes.it_COMBO_BOX;
+        public BoFormItemTypes ItemType { get { return BoFormItemTypes.it_COMBO_BOX; } }
 
-        public bool Validated => true;
+        public bool Validated { get { return true; } }
 
-        public BoDataType DataType => BoDataType.dt_SHORT_TEXT;
+        public BoDataType DataType { get { return BoDataType.dt_SHORT_TEXT; } }
 
-        public int Length => 20;
+        public int Length { get { return 20; } }
 
-        public string DefaultValue => null;
+        public string DefaultValue { get { return null; } }
 
         public object GetValue()
         {

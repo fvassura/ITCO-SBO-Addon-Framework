@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using ITCO.SboAddon.Framework.Helpers;
+﻿using ITCO.SboAddon.Framework.Helpers;
 using SAPbobsCOM;
+using System;
+using System.Collections.Generic;
 
 namespace ITCO.SboAddon.Framework.Extensions
 {
@@ -18,7 +18,7 @@ namespace ITCO.SboAddon.Framework.Extensions
         {
             var returnCode = documents.Add();
             ErrorHelper.HandleErrorWithException(returnCode, "Could not Add Document");
-            
+
             return int.Parse(SboApp.Company.GetNewObjectKey());
         }
 
@@ -33,7 +33,7 @@ namespace ITCO.SboAddon.Framework.Extensions
 
             var documentEntryKey = int.Parse(SboApp.Company.GetNewObjectKey());
             if (!documents.GetByKey(documentEntryKey))
-                throw new Exception($"Could not load document with DocEntry {documentEntryKey}");
+                throw new Exception(string.Format("Could not load document with DocEntry {0}", documentEntryKey));
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace ITCO.SboAddon.Framework.Extensions
         public static bool Search(this IDocuments document, string table, string where)
         {
             var recordSet = SboApp.Company.GetBusinessObject(BoObjectTypes.BoRecordset) as Recordset;
-            recordSet.DoQuery($"SELECT * FROM [{table}] WHERE {where}");
+            recordSet.DoQuery(string.Format("SELECT * FROM [{0}] WHERE {1}", table, where));
             document.Browser.Recordset = recordSet;
             return recordSet.RecordCount != 0;
         }
@@ -111,7 +111,7 @@ namespace ITCO.SboAddon.Framework.Extensions
                 {
                     targetDocument.Lines.BaseEntry = sourceLine.DocEntry;
                     targetDocument.Lines.BaseLine = sourceLine.LineNum;
-                    targetDocument.Lines.BaseType = (int) sourceDocument.DocObjectCode;
+                    targetDocument.Lines.BaseType = (int)sourceDocument.DocObjectCode;
                     targetDocument.Lines.Add();
                 }
 
@@ -119,7 +119,7 @@ namespace ITCO.SboAddon.Framework.Extensions
                 {
                     targetDocument.Expenses.BaseDocEntry = sourceDocument.DocEntry;
                     targetDocument.Expenses.BaseDocLine = sourceExpense.LineNum;
-                    targetDocument.Expenses.BaseDocType = (int) sourceDocument.DocObjectCode;
+                    targetDocument.Expenses.BaseDocType = (int)sourceDocument.DocObjectCode;
                     targetDocument.Expenses.Add();
                 }
 
@@ -139,7 +139,7 @@ namespace ITCO.SboAddon.Framework.Extensions
             using (var weightMeasures = SboApp.Company.GetBusinessObject<WeightMeasures>(BoObjectTypes.oWeightMeasures))
             {
                 if (weightMeasures.Object.GetByKey(line.Weight1Unit))
-                    return (decimal) (line.Weight1 * weightMeasures.Object.UnitWeightinmg);
+                    return (decimal)(line.Weight1 * weightMeasures.Object.UnitWeightinmg);
 
                 return 0;
             }
